@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:test_app/core/erorro/failure.dart';
+import 'package:test_app/core/error/failure.dart';
 import 'package:test_app/main/data/models/album_model.dart';
 import 'package:test_app/main/data/models/commet_model.dart';
 import 'package:test_app/main/data/models/photos_model.dart';
