@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:test_app/main/data/datasources/user_shared_preferences_datasources.dart';
+import 'package:test_app/main/data/models/commet_model.dart';
 
 class APIManager {
   final http.Client _client;
@@ -58,10 +59,8 @@ class APIManager {
 
     Map<String, dynamic> responseJson;
     try {
-      final response = await _client.post(
-        url,
-        body: json.encode(body),
-      );
+      final response = await _client.post(url, body: json.encode(body));
+
       responseJson = _response(response);
     } on SocketException {
       throw Exception();
@@ -78,12 +77,6 @@ class APIManager {
         return responseJson;
       case 201:
         return json.decode(response.body.toString());
-      case 400:
-        throw Exception();
-      case 404:
-        throw Exception();
-      case 401:
-      case 500:
       default:
         throw Exception();
     }
