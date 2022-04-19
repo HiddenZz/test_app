@@ -48,10 +48,6 @@ class AlbumsUserBloc extends Bloc<AlbumsUserEvent, AlbumsUserState> {
     final resultAlbums =
         await _userRepository.getAlbumsUser(userId: event.userId);
 
-    ///Неподходящие апи для показа альбома и его превью, либо я не до конца разобрался в Jsonplaceholder,
-    ///поэтому пришлось бомбить запросами сервер,
-    /// чтобы для каждого альбома получить набор фотографий и соответсвенно превью альбома,
-    ///
     emitter(await resultAlbums.fold((l) => const _FailureAlbumsUserState(),
         (r) async {
       if (r.isNotEmpty) {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:test_app/main/domain/repositories/user_repository.dart';
+import 'package:test_app/main/domain/repositories/posts_repository.dart';
 
 import '../../data/models/commet_model.dart';
 
@@ -44,8 +44,8 @@ class CommentState with _$CommentState {
 }
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
-  CommentBloc({required UserRepository userRepository})
-      : _userRepository = userRepository,
+  CommentBloc({required PostRepository postRepository})
+      : _postRepository = postRepository,
         super(const _InitialCommentState()) {
     on<CommentEvent>(
       (event, emitter) => event.map<Future<void>>(
@@ -56,12 +56,12 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     );
   }
 
-  final UserRepository _userRepository;
+  final PostRepository _postRepository;
 
   Future<void> _create(
       _CreateCommentEvent event, Emitter<CommentState> emitter) async {
     emitter(CommentState.loading(state.coms));
-    final result = await _userRepository.sendComment(
+    final result = await _postRepository.sendComment(
         comment: CommentModel(
             postId: event.postId,
             name: event.name,
@@ -74,7 +74,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   Future<void> _read(
       _ReadCommentEvent event, Emitter<CommentState> emitter) async {
     emitter(CommentState.loading(state.coms));
-    final result = await _userRepository.getAllComments(postId: event.postId);
+    final result = await _postRepository.getAllComments(postId: event.postId);
     emitter(result.fold((l) => CommentState.failure(state.coms),
         (r) => CommentState.loaded(r)));
   }

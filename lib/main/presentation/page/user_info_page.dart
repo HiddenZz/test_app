@@ -34,60 +34,65 @@ class UserInfoPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: paddingH24V8,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: paddingV24,
-                child: Text(
-                  'Информация о пользователе',
-                  style: h3TextStyle,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: paddingV24,
+                  child: Text(
+                    'Информация о пользователе',
+                    style: h3TextStyle,
+                  ),
                 ),
-              ),
-              _InfoWidget(infoString: user.name, title: 'Имя'),
-              _InfoWidget(infoString: user.email, title: 'Email'),
-              _InfoWidget(infoString: user.phone, title: 'Телефон'),
-              _InfoWidget(infoString: user.website, title: 'Website'),
-              const Padding(
-                padding: paddingT36B24,
-                child: Text(
-                  'Место работы',
-                  style: h3TextStyle,
+                _InfoWidget(infoString: user.name, title: 'Имя'),
+                _InfoWidget(infoString: user.email, title: 'Email'),
+                _InfoWidget(infoString: user.phone, title: 'Телефон'),
+                _InfoWidget(infoString: user.website, title: 'Website'),
+                const Padding(
+                  padding: paddingT36B24,
+                  child: Text(
+                    'Место работы',
+                    style: h3TextStyle,
+                  ),
                 ),
-              ),
-              _InfoWidget(
-                  infoString: user.company.companyName,
-                  title: 'Название компании'),
-              _InfoWidget(infoString: user.company.bs, title: 'bs'),
-              _InfoWidget(
-                  infoString: user.company.catchPhrase,
-                  title: 'Крылатая фраза'),
-              //address
-              const Padding(
-                padding: paddingT36B24,
-                child: Text(
-                  'Адрес',
-                  style: h3TextStyle,
+                _InfoWidget(
+                    infoString: user.company.companyName,
+                    title: 'Название компании'),
+                _InfoWidget(infoString: user.company.bs, title: 'bs'),
+                _InfoWidget(
+                    infoString: user.company.catchPhrase,
+                    title: 'Крылатая фраза'),
+                //address
+                const Padding(
+                  padding: paddingT36B24,
+                  child: Text(
+                    'Адрес',
+                    style: h3TextStyle,
+                  ),
                 ),
-              ),
-              _InfoWidget(
-                  infoString: user.address.fullAddresString, title: 'Адрес'),
-              const Spacer(),
-              ButtonComponent(
-                onTap: () => navigateToPostUser(context),
-                text: 'Посты пользователя',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ButtonComponent(
-                onTap: () => navigateToAlbumsUser(context),
-                text: 'Альбомы пользователя',
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-            ],
+                _InfoWidget(
+                    infoString: user.address.fullAddresString, title: 'Адрес'),
+                const SizedBox(
+                  height: 40,
+                ),
+                ButtonComponent(
+                  onTap: () => navigateToPostUser(context),
+                  text: 'Посты пользователя',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ButtonComponent(
+                  onTap: () => navigateToAlbumsUser(context),
+                  text: 'Альбомы пользователя',
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+              ],
+            ),
           ),
         ),
       ),

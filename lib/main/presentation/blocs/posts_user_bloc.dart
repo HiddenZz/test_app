@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:test_app/main/domain/repositories/user_repository.dart';
+import 'package:test_app/main/domain/repositories/posts_repository.dart';
 
 import '../../data/models/posts_model.dart';
 
@@ -41,8 +41,8 @@ class UserPostState with _$UserPostState {
 }
 
 class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
-  UserPostBloc({required UserRepository userRepository})
-      : _userRepository = userRepository,
+  UserPostBloc({required PostRepository postRepository})
+      : _postRepository = postRepository,
         super(const _InitialUserPostState()) {
     on<UserPostEvent>(
       (event, emitter) => event.map<Future<void>>(
@@ -53,7 +53,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     );
   }
 
-  final UserRepository _userRepository;
+  final PostRepository _postRepository;
 
   Future<void> _create(
       _CreateUserPostEvent event, Emitter<UserPostState> emitter) async {
@@ -63,7 +63,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
   Future<void> _readUserPosts(
       _ReadUserPostEvent event, Emitter<UserPostState> emitter) async {
     emitter(UserPostState.loading(state.userPosts));
-    final result = await _userRepository.getAllPostsUser(userId: event.userId);
+    final result = await _postRepository.getAllPostsUser(userId: event.userId);
     emitter(result.fold((l) => _FailureUserPostState(state.userPosts),
         (r) => _LoadedUserPostState(r)));
   }
